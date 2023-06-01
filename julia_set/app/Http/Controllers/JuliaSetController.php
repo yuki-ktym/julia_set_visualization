@@ -8,13 +8,7 @@ class JuliaSetController extends Controller
 {
     public function index()
     {
-        // $response = $this->generateJuliaSet(request());
-        // $juliaSet = $response['juliaSet'];
-
-        return view(
-            'julia'
-            // , compact('juliaSet')
-        );
+        return view('julia');
     }
 
     public function generateJuliaSet(Request $request)
