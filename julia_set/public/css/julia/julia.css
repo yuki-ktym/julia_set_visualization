@@ -1,0 +1,10 @@
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 50px;
+}
+
+#julia-canvas {
+  margin: 50px auto;
+  display: block;
+}

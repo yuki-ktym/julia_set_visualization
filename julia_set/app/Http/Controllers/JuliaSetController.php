@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-
 
 class JuliaSetController extends Controller
 {
     public function index()
     {
-        return view('julia');
+        // $response = $this->generateJuliaSet(request());
+        // $juliaSet = $response['juliaSet'];
+
+        return view(
+            'julia'
+            // , compact('juliaSet')
+        );
     }
 
     public function generateJuliaSet(Request $request)
@@ -21,17 +25,19 @@ class JuliaSetController extends Controller
         $min_y = $request->input('min_y');
         $max_y = $request->input('max_y');
         $comp_const = $request->input('comp_const');
-        $juliaSet = $this->generateJuliaSet($min_x, $max_x, $min_y, $max_y, $comp_const);
+
+        // 初期値
+        $juliaSet = [];
 
         // キャンバス生成
-        $canvasWidth = 800;
-        $canvasHeight = 600;
-        // 計算
+        $canvasWidth = 400;
+        $canvasHeight = 300;
+        // 処理
         for ($y = 0; $y < $canvasHeight; $y++) {
             for ($x = 0; $x < $canvasWidth; $x++) {
                 $real = $min_x + ($max_x - $min_x) * ($x / $canvasWidth);
                 $imaginary = $min_y + ($max_y - $min_y) * ($y / $canvasHeight);
-                $color = $this->calculateJuliaSetColor($real, $imaginary, $comp_const);
+                $color = $this->juliaSetColor($real, $imaginary, $comp_const);
                 $juliaSet[] = [
                     'x' => $x,
                     'y' => $y,
@@ -39,10 +45,10 @@ class JuliaSetController extends Controller
                 ];
             }
         }
-        return Response::json(['juliaSet' => $juliaSet]);
+        return view('julia', compact('juliaSet'));
     }
 
-    private function calculateJuliaSetColor($cReal, $cImaginary, $comp_const)
+    private function juliaSetColor($cReal, $cImaginary, $comp_const)
     {
         // ジュリア集合の色を計算する処理を実装する
         // 例えば、与えられた複素数座標と複素定数に基づいて色を計算し、返す

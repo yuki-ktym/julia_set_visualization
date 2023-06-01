@@ -15,7 +15,7 @@ form.addEventListener('submit', function (event) {
 
   // リクエストを送信してジュリア集合を取得
   fetch('/julia', {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
